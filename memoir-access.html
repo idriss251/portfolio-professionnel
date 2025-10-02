@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès Sécurisé - Mémoire de Fin d'Études</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .access-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .access-header {
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .access-header i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .access-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .access-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .access-content {
+            padding: 40px 30px;
+        }
+        
+        .memoir-info {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .memoir-info h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .memoir-info p {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .memoir-details {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .detail-value {
+            color: #6c757d;
+        }
+        
+        .login-form {
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #ffc107;
+        }
+        
+        .access-btn {
+            width: 100%;
+            background: #ffc107;
+            color: #2c3e50;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .access-btn:hover {
+            background: #e6a700;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+        }
+        
+        .access-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .security-notice {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .security-notice h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .security-notice p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .access-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #f8f9fa;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffc107;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="access-container">
+        <div class="access-header">
+            <i class="fas fa-graduation-cap"></i>
+            <h1>Mémoire de Fin d'Études</h1>
+            <p>Accès Sécurisé Requis</p>
+        </div>
+        
+        <div class="access-content">
+            <div class="memoir-info">
+                <h3>Conception et Développement d'un Système de Gestion Scolaire Intégré</h3>
+                <p><strong>Cas d'étude :</strong> Complexe Scolaire La Borne</p>
+                <p>Mémoire présenté en vue de l'obtention du grade de Licencié en Génie Informatique</p>
+                
+                <div class="memoir-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Auteur :</span>
+                        <span class="detail-value">Idriss Kyavuyirwe</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Année :</span>
+                        <span class="detail-value">2025</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Pages :</span>
+                        <span class="detail-value">90 pages</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Technologies :</span>
+                        <span class="detail-value">PHP, MySQL, JavaScript</span>
+                    </div>
+                </div>
+                
+                <div class="access-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">4</span>
+                        <div class="stat-label">Chapitres</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">15</span>
+                        <div class="stat-label">Fonctionnalités</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error-message" id="error-message">
+                <i class="fas fa-exclamation-triangle"></i> Identifiants incorrects. Veuillez réessayer.
+            </div>
+            
+            <div class="success-message" id="success-message">
+                <i class="fas fa-check-circle"></i> Accès autorisé ! Redirection en cours...
+            </div>
+            
+            <div class="memoir-actions" style="text-align: center; margin-top: 30px;">
+                <a href="admin-login.html" class="memoir-btn primary" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; font-size: 1.1rem;">
+                    <i class="fas fa-lock"></i> Accès Sécurisé au Mémoire
+                </a>
+                <p style="margin-top: 20px; color: #6c757d; font-size: 0.9rem;">
+                    Vous serez redirigé vers la page de connexion sécurisée
+                </p>
+            </div>
+                <p>
+                    Ce document est protégé par des droits d'auteur. L'accès est réservé aux personnes autorisées. 
+                    Toute tentative d accès non autorisé sera enregistrée et signalée.
+                </p>
+            </div>
+            <div class="back-link">
+                <a href="index.html#parcours">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour au Portfolio
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+            const accessBtn = document.getElementById('access-btn');
+            
+            // Hide previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            
+            // Disable button during processing
+            accessBtn.disabled = true;
+            accessBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification...';
+            
+            // Simulate authentication (replace with real authentication)
+            setTimeout(() => {
+                // Demo credentials (replace with real authentication system)
+                if (username === 'idriss_admin' && password === 'memoir2024') {
+                    successMessage.style.display = 'block';
+                    accessBtn.innerHTML = '<i class="fas fa-check"></i> Accès Autorisé';
+                    
+                    // Redirect to memoir document or application
+                    setTimeout(() => {
+                        // Replace with actual memoir document URL
+                        window.open('memoir-document.html', '_blank');
+                        // Or redirect to the school management application
+                        // window.location.href = 'school-management-app/';
+                    }, 2000);
+                    
+                } else {
+                    errorMessage.style.display = 'block';
+                    accessBtn.disabled = false;
+                    accessBtn.innerHTML = '<i class="fas fa-unlock"></i> Accéder au Mémoire';
+                    
+                    // Clear form
+                    document.getElementById('password').value = '';
+                }
+            }, 1500);
+        });
+        
+        // Add some security features
+        let attemptCount = 0;
+        const maxAttempts = 3;
+        
+        document.getElementById('login-form').addEventListener('submit', function() {
+            attemptCount++;
+            
+            if (attemptCount >= maxAttempts) {
+                document.getElementById('error-message').innerHTML = 
+                    '<i class="fas fa-ban"></i> Trop de tentatives. Accès temporairement bloqué.';
+                document.getElementById('access-btn').disabled = true;
+                
+                // Re-enable after 5 minutes (for demo purposes, 30 seconds)
+                setTimeout(() => {
+                    attemptCount = 0;
+                    document.getElementById('access-btn').disabled = false;
+                    document.getElementById('error-message').style.display = 'none';
+                }, 30000);
+            }
+        });
+        
+        // Prevent right-click and some keyboard shortcuts for security
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+U
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

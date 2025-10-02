@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Administrateur - idriss_code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .login-header .logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-content {
+            padding: 40px 30px;
+        }
+        
+        .security-notice {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ffc107;
+            text-align: center;
+        }
+        
+        .security-notice i {
+            font-size: 2rem;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .security-notice h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .security-notice p {
+            color: #6c5700;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .login-form {
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(248, 249, 250, 0.8);
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            margin-top: 12px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .login-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #dc3545;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #28a745;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link a:hover {
+            color: #5a6fd8;
+            transform: translateX(-3px);
+        }
+        
+        .attempts-counter {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .lockout-timer {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .features-preview {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .features-preview h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .features-list {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #5d6d7e;
+            font-size: 0.9rem;
+        }
+        
+        .feature-item i {
+            color: #667eea;
+            width: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h1>Espace Privé</h1>
+            <p>Accès Administrateur Sécurisé</p>
+        </div>
+        
+        <div class="login-content">
+            <div class="security-notice">
+                <i class="fas fa-lock"></i>
+                <h3>Zone Sécurisée</h3>
+                <p>Cet espace est réservé à l'administrateur du site. Accès strictement personnel et confidentiel.</p>
+            </div>
+            
+            <div class="lockout-timer" id="lockout-timer">
+                <i class="fas fa-clock"></i>
+                <span id="lockout-message">Compte temporairement verrouillé. Réessayez dans <span id="countdown">300</span> secondes.</span>
+            </div>
+            
+            <div class="error-message" id="error-message">
+                <i class="fas fa-exclamation-triangle"></i> <span id="error-text">Identifiants incorrects. Veuillez réessayer.</span>
+            </div>
+            
+            <div class="success-message" id="success-message">
+                <i class="fas fa-check-circle"></i> Connexion réussie ! Redirection en cours...
+            </div>
+            
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <button type="submit" class="login-btn" id="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Se Connecter
+                </button>
+            </form>
+            
+            <div class="attempts-counter" id="attempts-counter">
+                Tentatives restantes : <span id="remaining-attempts">3</span>/3
+            </div>
+            
+            <div class="features-preview">
+                <h4><i class="fas fa-crown"></i> Fonctionnalités Administrateur</h4>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-timeline"></i>
+                        <span>Accès au parcours personnel complet</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Gestion du mémoire et documents</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Statistiques et analytics du site</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Paramètres et configuration</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="back-link">
+                <a href="index.html">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour au Site Public
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let attemptCount = parseInt(localStorage.getItem('loginAttempts') || '0');
+        let lockoutTime = parseInt(localStorage.getItem('lockoutTime') || '0');
+        const maxAttempts = 3;
+        const lockoutDuration = 300; // 5 minutes in seconds
+        
+        // Check if user is locked out
+        function checkLockout() {
+            const now = Math.floor(Date.now() / 1000);
+            if (lockoutTime > now) {
+                showLockout(lockoutTime - now);
+                return true;
+            } else if (lockoutTime > 0) {
+                // Lockout expired, reset
+                localStorage.removeItem('lockoutTime');
+                localStorage.removeItem('loginAttempts');
+                attemptCount = 0;
+                updateAttemptsDisplay();
+            }
+            return false;
+        }
+        
+        function showLockout(remainingSeconds) {
+            document.getElementById('lockout-timer').style.display = 'block';
+            document.getElementById('login-btn').disabled = true;
+            
+            const countdown = setInterval(() => {
+                remainingSeconds--;
+                document.getElementById('countdown').textContent = remainingSeconds;
+                
+                if (remainingSeconds <= 0) {
+                    clearInterval(countdown);
+                    document.getElementById('lockout-timer').style.display = 'none';
+                    document.getElementById('login-btn').disabled = false;
+                    localStorage.removeItem('lockoutTime');
+                    localStorage.removeItem('loginAttempts');
+                    attemptCount = 0;
+                    updateAttemptsDisplay();
+                }
+            }, 1000);
+        }
+        
+        function updateAttemptsDisplay() {
+            const remaining = maxAttempts - attemptCount;
+            document.getElementById('remaining-attempts').textContent = remaining;
+            
+            const counter = document.getElementById('attempts-counter');
+            if (remaining <= 1) {
+                counter.style.color = '#dc3545';
+                counter.style.fontWeight = 'bold';
+            } else if (remaining <= 2) {
+                counter.style.color = '#ffc107';
+            }
+        }
+        
+        // Initialize
+        if (checkLockout()) {
+            // User is locked out
+        } else {
+            updateAttemptsDisplay();
+        }
+        
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (checkLockout()) return;
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+            const loginBtn = document.getElementById('login-btn');
+            
+            // Hide previous messages
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            
+            // Disable button during processing
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Vérification...';
+            
+            // Simulate authentication delay
+            setTimeout(() => {
+                // Admin credentials
+                if (username === 'idriss_admin' && password === 'admin2024_secure') {
+                    successMessage.style.display = 'block';
+                    loginBtn.innerHTML = '<i class="fas fa-check"></i> Connexion Réussie';
+                    
+                    // Reset attempts on successful login
+                    localStorage.removeItem('loginAttempts');
+                    localStorage.removeItem('lockoutTime');
+                    
+                    // Set authentication session
+                    sessionStorage.setItem('adminAuthenticated', 'true');
+                    
+                    // Redirect to private area
+                    setTimeout(() => {
+                        window.location.href = 'private-area.html';
+                    }, 2000);
+                    
+                } else {
+                    attemptCount++;
+                    localStorage.setItem('loginAttempts', attemptCount.toString());
+                    
+                    if (attemptCount >= maxAttempts) {
+                        // Lock out user
+                        const lockoutUntil = Math.floor(Date.now() / 1000) + lockoutDuration;
+                        localStorage.setItem('lockoutTime', lockoutUntil.toString());
+                        showLockout(lockoutDuration);
+                        
+                        document.getElementById('error-text').textContent = 
+                            'Trop de tentatives échouées. Compte verrouillé pour 5 minutes.';
+                    } else {
+                        const remaining = maxAttempts - attemptCount;
+                        document.getElementById('error-text').textContent = 
+                            `Identifiants incorrects. ${remaining} tentative(s) restante(s).`;
+                    }
+                    
+                    errorMessage.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Se Connecter';
+                    updateAttemptsDisplay();
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                }
+            }, 1500);
+        });
+        
+        // Security measures
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+U, Ctrl+S
+            if (e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.key === 'u') ||
+                (e.ctrlKey && e.key === 's')) {
+                e.preventDefault();
+            }
+        });
+        
+        // Log access attempts (in real app, send to server)
+        window.addEventListener('load', function() {
+            const timestamp = new Date().toISOString();
+            console.log(`Admin login page accessed at ${timestamp}`);
+        });
+    </script>
+</body>
+</html>

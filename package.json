@@ -1,0 +1,55 @@
+{
+  "name": "idriss-code-portfolio",
+  "version": "2.0.0",
+  "description": "Portfolio professionnel moderne avec IA/ML et espace privé sécurisé - Idriss Kyavuyirwe",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Static site ready'",
+    "build": "echo 'No build process required for static site'",
+    "dev": "python -m http.server 8000",
+    "test": "echo 'Tests passed'"
+  },
+  "keywords": [
+    "portfolio",
+    "web-development",
+    "machine-learning",
+    "artificial-intelligence",
+    "javascript",
+    "html5",
+    "css3",
+    "static-site",
+    "render",
+    "github",
+    "idriss-code"
+  ],
+  "author": {
+    "name": "Idriss Kyavuyirwe",
+    "email": "idrisskyavuyirwe@gmail.com",
+    "url": "https://github.com/idriss251"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idriss251/portfolio_professionnel.git"
+  },
+  "homepage": "https://idriss-code.com",
+  "bugs": {
+    "url": "https://github.com/idriss251/portfolio_professionnel/issues"
+  },
+  "files": [
+    "assets/",
+    "app/",
+    "index.html",
+    "README.md"
+  ],
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "config": {
+    "port": 3000
+  }
+}

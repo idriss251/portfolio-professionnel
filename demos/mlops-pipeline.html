@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline MLOps - Démo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .demo-content {
+            padding: 40px;
+        }
+        
+        .pipeline-flow {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .flow-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .flow-step.active {
+            background: #059669;
+            color: white;
+        }
+        
+        .flow-step i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #059669;
+        }
+        
+        .flow-step.active i {
+            color: white;
+        }
+        
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #059669;
+            margin: 0 10px;
+        }
+        
+        .status-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #059669;
+        }
+        
+        .status-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .status-value.success { color: #10b981; }
+        .status-value.warning { color: #f59e0b; }
+        .status-value.error { color: #ef4444; }
+        .status-value.info { color: #3b82f6; }
+        
+        .logs-section {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px 0;
+            border-bottom: 1px solid #374151;
+        }
+        
+        .log-timestamp {
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+        
+        .log-level {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        
+        .log-level.info { background: #3b82f6; }
+        .log-level.success { background: #10b981; }
+        .log-level.warning { background: #f59e0b; }
+        .log-level.error { background: #ef4444; }
+        
+        .control-panel {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .control-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-btn.primary {
+            background: #059669;
+            color: white;
+        }
+        
+        .control-btn.secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .control-btn.danger {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .metric-chart {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #2c3e50;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        .deployment-status {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .deployment-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .deployment-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html#projects" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Retour au Portfolio
+    </a>
+    
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-cogs"></i> Pipeline MLOps</h1>
+            <p>Infrastructure complète de déploiement et monitoring ML</p>
+        </div>
+        
+        <div class="demo-content">
+            <div class="pipeline-flow">
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">
+                    <i class="fas fa-project-diagram"></i> Pipeline de Déploiement
+                </h3>
+                
+                <div class="flow-steps">
+                    <div class="flow-step active" id="step-1" onclick="activateStep(1)">
+                        <i class="fas fa-code"></i>
+                        <h4>Code</h4>
+                        <p>Développement</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="flow-step" id="step-2" onclick="activateStep(2)">
+                        <i class="fas fa-vial"></i>
+                        <h4>Test</h4>
+                        <p>Validation</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="flow-step" id="step-3" onclick="activateStep(3)">
+                        <i class="fas fa-hammer"></i>
+                        <h4>Build</h4>
+                        <p>Construction</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="flow-step" id="step-4" onclick="activateStep(4)">
+                        <i class="fas fa-rocket"></i>
+                        <h4>Deploy</h4>
+                        <p>Déploiement</p>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="flow-step" id="step-5" onclick="activateStep(5)">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Monitor</h4>
+                        <p>Surveillance</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-dashboard">
+                <div class="status-card">
+                    <i class="fas fa-server" style="font-size: 2rem; color: #059669; margin-bottom: 10px;"></i>
+                    <h4>Services Actifs</h4>
+                    <div class="status-value success">12/12</div>
+                    <p style="color: #6c757d;">Tous les services fonctionnent</p>
+                </div>
+                
+                <div class="status-card">
+                    <i class="fas fa-tachometer-alt" style="font-size: 2rem; color: #3b82f6; margin-bottom: 10px;"></i>
+                    <h4>Latence Moyenne</h4>
+                    <div class="status-value info">45ms</div>
+                    <p style="color: #6c757d;">Temps de réponse optimal</p>
+                </div>
+                
+                <div class="status-card">
+                    <i class="fas fa-users" style="font-size: 2rem; color: #10b981; margin-bottom: 10px;"></i>
+                    <h4>Requêtes/min</h4>
+                    <div class="status-value success">1,247</div>
+                    <p style="color: #6c757d;">Trafic en temps réel</p>
+                </div>
+                
+                <div class="status-card">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #f59e0b; margin-bottom: 10px;"></i>
+                    <h4>Alertes</h4>
+                    <div class="status-value warning">2</div>
+                    <p style="color: #6c757d;">Alertes mineures</p>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">
+                    <i class="fas fa-sliders-h"></i> Panneau de Contrôle
+                </h3>
+                
+                <div class="control-buttons">
+                    <button class="control-btn primary" onclick="triggerDeployment()">
+                        <i class="fas fa-play"></i> Déployer
+                    </button>
+                    <button class="control-btn secondary" onclick="rollback()">
+                        <i class="fas fa-undo"></i> Rollback
+                    </button>
+                    <button class="control-btn secondary" onclick="scaleUp()">
+                        <i class="fas fa-expand-arrows-alt"></i> Scale Up
+                    </button>
+                    <button class="control-btn danger" onclick="emergencyStop()">
+                        <i class="fas fa-stop"></i> Arrêt d'urgence
+                    </button>
+                </div>
+                
+                <div class="deployment-status" id="deployment-status" style="display: none;">
+                    <h4 style="color: #1976d2; margin-bottom: 15px;">
+                        <i class="fas fa-info-circle"></i> Statut du Déploiement
+                    </h4>
+                    <div class="deployment-info">
+                        <div class="deployment-item">
+                            <strong>Version</strong>
+                            <div>v2.1.3</div>
+                        </div>
+                        <div class="deployment-item">
+                            <strong>Environnement</strong>
+                            <div>Production</div>
+                        </div>
+                        <div class="deployment-item">
+                            <strong>Instances</strong>
+                            <div>5 actives</div>
+                        </div>
+                        <div class="deployment-item">
+                            <strong>Santé</strong>
+                            <div style="color: #10b981;">✓ Saine</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="logs-section">
+                <h4 style="margin-bottom: 15px; color: #f9fafb;">
+                    <i class="fas fa-terminal"></i> Logs en Temps Réel
+                </h4>
+                <div id="logs-container">
+                    <div class="log-entry">
+                        <span class="log-timestamp">2024-01-15 14:32:15</span>
+                        <span class="log-level info">INFO</span>
+                        <span>Pipeline démarré avec succès</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-timestamp">2024-01-15 14:32:18</span>
+                        <span class="log-level success">SUCCESS</span>
+                        <span>Tests unitaires passés (127/127)</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-timestamp">2024-01-15 14:32:22</span>
+                        <span class="log-level info">INFO</span>
+                        <span>Construction de l'image Docker...</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-timestamp">2024-01-15 14:32:45</span>
+                        <span class="log-level success">SUCCESS</span>
+                        <span>Image construite: ml-model:v2.1.3</span>
+                    </div>
+                    <div class="log-entry">
+                        <span class="log-timestamp">2024-01-15 14:33:01</span>
+                        <span class="log-level warning">WARNING</span>
+                        <span>Utilisation mémoire élevée détectée (85%)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-chart">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">
+                        <i class="fas fa-chart-area"></i> Performance du Modèle
+                    </h4>
+                    <div class="chart-placeholder">
+                        <div style="text-align: center; color: #6c757d;">
+                            <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <p>Graphique de performance</p>
+                            <p style="font-size: 0.9rem;">Précision: 94.2% | Rappel: 89.7%</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-chart">
+                    <h4 style="color: #2c3e50; margin-bottom: 10px;">
+                        <i class="fas fa-memory"></i> Utilisation des Ressources
+                    </h4>
+                    <div class="chart-placeholder">
+                        <div style="text-align: center; color: #6c757d;">
+                            <i class="fas fa-server" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                            <p>Monitoring des ressources</p>
+                            <p style="font-size: 0.9rem;">CPU: 65% | RAM: 78% | GPU: 82%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin-top: 30px;">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">
+                    <i class="fas fa-tools"></i> Stack Technologique
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4 style="color: #059669; margin-bottom: 10px;">Orchestration</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>Kubernetes</li>
+                            <li>Docker</li>
+                            <li>Helm Charts</li>
+                            <li>Istio Service Mesh</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #059669; margin-bottom: 10px;">CI/CD</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>GitLab CI/CD</li>
+                            <li>Jenkins</li>
+                            <li>ArgoCD</li>
+                            <li>Tekton Pipelines</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #059669; margin-bottom: 10px;">Monitoring</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>Prometheus</li>
+                            <li>Grafana</li>
+                            <li>ELK Stack</li>
+                            <li>Jaeger Tracing</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #059669; margin-bottom: 10px;">ML Tools</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>MLflow</li>
+                            <li>Kubeflow</li>
+                            <li>Apache Airflow</li>
+                            <li>DVC (Data Version Control)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        
+        function activateStep(stepNumber) {
+            // Remove active class from all steps
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`step-${i}`).classList.remove('active');
+            }
+            
+            // Add active class to selected step
+            document.getElementById(`step-${stepNumber}`).classList.add('active');
+            currentStep = stepNumber;
+            
+            // Add log entry
+            addLogEntry(`Étape ${stepNumber} sélectionnée`, 'info');
+        }
+        
+        function triggerDeployment() {
+            document.getElementById('deployment-status').style.display = 'block';
+            addLogEntry('Déploiement initié...', 'info');
+            
+            setTimeout(() => {
+                addLogEntry('Tests de validation en cours...', 'info');
+            }, 1000);
+            
+            setTimeout(() => {
+                addLogEntry('Déploiement réussi en production', 'success');
+            }, 3000);
+        }
+        
+        function rollback() {
+            addLogEntry('Rollback vers la version précédente initié', 'warning');
+            setTimeout(() => {
+                addLogEntry('Rollback terminé avec succès', 'success');
+            }, 2000);
+        }
+        
+        function scaleUp() {
+            addLogEntry('Mise à l\'échelle automatique activée', 'info');
+            setTimeout(() => {
+                addLogEntry('3 nouvelles instances déployées', 'success');
+            }, 2000);
+        }
+        
+        function emergencyStop() {
+            addLogEntry('ARRÊT D\'URGENCE ACTIVÉ', 'error');
+            setTimeout(() => {
+                addLogEntry('Tous les services arrêtés en sécurité', 'warning');
+            }, 1000);
+        }
+        
+        function addLogEntry(message, level) {
+            const logsContainer = document.getElementById('logs-container');
+            const timestamp = new Date().toLocaleString('fr-FR');
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-timestamp">${timestamp}</span>
+                <span class="log-level ${level}">${level.toUpperCase()}</span>
+                <span>${message}</span>
+            `;
+            
+            logsContainer.appendChild(logEntry);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+        
+        // Simulate real-time logs
+        setInterval(() => {
+            const randomMessages = [
+                { msg: 'Heartbeat reçu de tous les services', level: 'info' },
+                { msg: 'Métriques collectées avec succès', level: 'success' },
+                { msg: 'Nettoyage automatique des logs anciens', level: 'info' },
+                { msg: 'Sauvegarde des modèles terminée', level: 'success' }
+            ];
+            
+            const random = randomMessages[Math.floor(Math.random() * randomMessages.length)];
+            addLogEntry(random.msg, random.level);
+        }, 5000);
+    </script>
+</body>
+</html>

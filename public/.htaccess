@@ -1,0 +1,11 @@
+RewriteEngine On 
+ 
+# Rediriger tout vers le front controller 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteRule (.*)$ index.php?url=$1 [QSA,L] 
+ 
+# Sécurité : protéger les fichiers sensibles 
+<Files ~ "\.(env|json|config|yml)$"> 
+    Deny from all 
+</Files> 

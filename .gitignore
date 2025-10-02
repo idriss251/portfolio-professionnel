@@ -1,0 +1,31 @@
+# Dependencies 
+/vendor/ 
+/node_modules/ 
+ 
+# Configuration files 
+/app/config/config.local.php 
+ 
+# Logs 
+/logs/*.log 
+!/logs/.gitkeep 
+ 
+# Temporary files 
+/tmp/* 
+!/tmp/.gitkeep 
+ 
+# Environment files 
+.env 
+.env.local 
+ 
+# IDE 
+.idea/ 
+.vscode/ 
+*.swp 
+*.swo 
+ 
+# OS 
+.DS_Store 
+Thumbs.db 
+ 
+# Assets compilés 
+/assets/css/compiled/ 

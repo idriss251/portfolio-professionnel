@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Privé - Mon Parcours | idriss_code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <style>
+        /* Additional private area styles */
+        .private-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .private-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .private-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .private-logo i {
+            color: #ffc107;
+            font-size: 2rem;
+        }
+        
+        .private-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .private-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .private-menu a:hover, .private-menu a.active {
+            background: #ffc107;
+            color: #2c3e50;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .private-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .welcome-section h1 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+        
+        .welcome-section p {
+            color: #6c5700;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #667eea;
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .content-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6c757d;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .parcours {
+            background: white;
+            padding: 0;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #28a745;
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .action-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .action-card i {
+            color: #28a745;
+            font-size: 1.5rem;
+        }
+        
+        .action-card p {
+            color: #6c757d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .action-btn {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .security-log {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        .security-log h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .log-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .log-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .log-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+        }
+        
+        .log-time {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .private-nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .private-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .content-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="private-header">
+        <div class="private-nav">
+            <div class="private-logo">
+                <i class="fas fa-user-shield"></i>
+                <span>Espace Privé - idriss_code</span>
+            </div>
+            
+            <ul class="private-menu">
+                <li><a href="#" class="active" onclick="showTab('parcours')">Mon Parcours</a></li>
+                <li><a href="#" onclick="showTab('memoir')">Mémoire</a></li>
+                <li><a href="#" onclick="showTab('analytics')">Analytics</a></li>
+                <li><a href="#" onclick="showTab('settings')">Paramètres</a></li>
+            </ul>
+            
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
+        </div>
+    </div>
+    
+    <div class="private-container">
+        <div class="welcome-section">
+            <h1><i class="fas fa-crown"></i> Bienvenue dans votre espace privé, Idriss !</h1>
+            <p>
+                Cet espace sécurisé vous donne accès à votre parcours personnel, la gestion de votre mémoire, 
+                et les statistiques de votre portfolio. Toutes les informations ici sont strictement confidentielles.
+            </p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-eye"></i>
+                <span class="stat-number">1,247</span>
+                <div class="stat-label">Vues du Portfolio</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-download"></i>
+                <span class="stat-number">89</span>
+                <div class="stat-label">Téléchargements CV</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-envelope"></i>
+                <span class="stat-number">23</span>
+                <div class="stat-label">Messages Reçus</div>
+            </div>
+            
+            <div class="stat-card">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="stat-number">156</span>
+                <div class="stat-label">Accès Mémoire</div>
+            </div>
+        </div>
+        
+        <div class="content-tabs">
+            <button class="tab-btn active" onclick="showTab('parcours')">
+                <i class="fas fa-timeline"></i> Mon Parcours
+            </button>
+            <button class="tab-btn" onclick="showTab('memoir')">
+                <i class="fas fa-graduation-cap"></i> Mémoire
+            </button>
+            <button class="tab-btn" onclick="showTab('analytics')">
+                <i class="fas fa-chart-bar"></i> Analytics
+            </button>
+            <button class="tab-btn" onclick="showTab('settings')">
+                <i class="fas fa-cog"></i> Paramètres
+            </button>
+        </div>
+        
+        <!-- Mon Parcours Tab -->
+        <div class="tab-content active" id="parcours-tab">
+            <section class="parcours">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Mon Parcours Personnel</h2>
+                        <p class="section-subtitle">De l'enfance à l'expertise technique - Version Complète</p>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2007-2012</div>
+                            <div class="timeline-content">
+                                <h3>Les Premiers Pas</h3>
+                                <p>Découverte de l'informatique dès le plus jeune âge. Fascination pour les ordinateurs et premiers contacts avec la programmation à travers des jeux éducatifs et des logiciels simples. Première expérience avec Windows XP et découverte de Paint, Calculator et les premiers jeux.</p>
+                                <p><strong>Moments clés :</strong> Premier ordinateur familial, découverte d'Internet, premiers pas avec MS Office.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">2013-2018</div>
+                            <div class="timeline-content">
+                                <h3>Formation Secondaire</h3>
+                                <p>Études secondaires avec spécialisation en sciences exactes. Approfondissement des mathématiques et découverte de la logique algorithmique qui formeront les bases de ma future carrière. Participation aux olympiades de mathématiques.</p>
+                                <p><strong>Réalisations :</strong> Mention Bien au BEPC, création de premiers sites web en HTML/CSS, apprentissage autodidacte de JavaScript.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">2019-2025</div>
+                            <div class="timeline-content">
+                                <h3>Formation Universitaire</h3>
+                                <p>Licence en Génie Informatique avec spécialisation en développement web, mobile et intelligence artificielle. Acquisition des compétences techniques fondamentales et découverte de ma passion pour l'IA.</p>
+                                <p><strong>Projets marquants :</strong></p>
+                                <ul>
+                                    <li>Développement d'une application de gestion de bibliothèque (2020)</li>
+                                    <li>Création d'un chatbot intelligent pour l'université (2021)</li>
+                                    <li>Système de reconnaissance faciale avec OpenCV (2023)</li>
+                                    <li>Application mobile de covoiturage étudiant (2025)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item featured">
+                            <div class="timeline-date">2025</div>
+                            <div class="timeline-content">
+                                <h3>Mémoire de Fin d'Études</h3>
+                                <h4>"Conception et Développement d'un Système de Gestion Scolaire Intégré"</h4>
+                                <p><strong>Cas d'étude :</strong> Complexe Scolaire La Borne</p>
+                                <p>Développement d'une solution complète de gestion scolaire incluant la gestion des élèves, des notes, des emplois du temps, et des communications parents-école. Système web responsive avec authentification sécurisée.</p>
+                                <p><strong>Défis relevés :</strong></p>
+                                <ul>
+                                    <li>Architecture scalable pour 1000+ utilisateurs</li>
+                                    <li>Sécurisation des données sensibles (RGPD)</li>
+                                    <li>Interface multilingue (Français/Lingala)</li>
+                                    <li>Système de sauvegarde automatique</li>
+                                </ul>
+                                <div class="memoir-features">
+                                    <span class="feature-tag">PHP/MySQL</span>
+                                    <span class="feature-tag">JavaScript</span>
+                                    <span class="feature-tag">Bootstrap</span>
+                                    <span class="feature-tag">Sécurité</span>
+                                    <span class="feature-tag">API REST</span>
+                                </div>
+                                <div class="memoir-actions">
+                                    <a href="memoir-access.html" class="memoir-btn primary">
+                                        <i class="fas fa-lock"></i> Accès Sécurisé au Mémoire
+                                    </a>
+                                    <a href="#" class="memoir-btn secondary">
+                                        <i class="fas fa-external-link-alt"></i> Voir l'Application
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">2024-Présent</div>
+                            <div class="timeline-content">
+                                <h3>Expertise Professionnelle</h3>
+                                <p>Spécialisation en Intelligence Artificielle, Machine Learning et développement d'applications modernes. Focus sur les solutions innovantes et l'automatisation intelligente.</p>
+                                <p><strong>Projets en cours :</strong></p>
+                                <ul>
+                                    <li>Système de recommandation ML pour e-commerce</li>
+                                    <li>Chatbot multilingue avec NLP avancé</li>
+                                    <li>Pipeline MLOps avec Docker et Kubernetes</li>
+                                    <li>Application de vision par ordinateur</li>
+                                </ul>
+                                <p><strong>Objectifs 2025 :</strong> Certification AWS, Maîtrise de TensorFlow, Lancement de ma startup tech.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Memoir Tab -->
+        <div class="tab-content" id="memoir-tab">
+            <div class="quick-actions">
+                <div class="action-card">
+                    <h3><i class="fas fa-file-pdf"></i> Document Mémoire</h3>
+                    <p>Accédez au document complet de votre mémoire avec tous les chapitres, annexes et références.</p>
+                    <a href="memoir-document.html" class="action-btn">
+                        <i class="fas fa-eye"></i> Consulter
+                    </a>
+                </div>
+                
+                <div class="action-card">
+                    <h3><i class="fas fa-code"></i> Code Source</h3>
+                    <p>Repository GitHub contenant tout le code source du système de gestion scolaire développé.</p>
+                    <a href="https://github.com/idriss251/school-management-system" class="action-btn">
+                        <i class="fab fa-github"></i> Voir le Code
+                    </a>
+                </div>
+                
+                <div class="action-card">
+                    <h3><i class="fas fa-presentation"></i> Présentation</h3>
+                    <p>Slides de la soutenance de mémoire avec démonstration du système développé.</p>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-download"></i> Télécharger
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Analytics Tab -->
+        <div class="tab-content" id="analytics-tab">
+            <h2>Analytics du Portfolio</h2>
+            <p>Statistiques détaillées de votre site web et de vos projets.</p>
+            <!-- Add analytics content here -->
+        </div>
+        
+        <!-- Settings Tab -->
+        <div class="tab-content" id="settings-tab">
+            <h2>Paramètres</h2>
+            <p>Configuration de votre espace privé et paramètres de sécurité.</p>
+            <!-- Add settings content here -->
+        </div>
+        
+        <div class="security-log">
+            <h3><i class="fas fa-shield-alt"></i> Journal de Sécurité</h3>
+            <div class="log-entry">
+                <div class="log-info">
+                    <div class="log-status"></div>
+                    <span>Connexion réussie depuis 192.168.1.100</span>
+                </div>
+                <div class="log-time">Il y a 2 minutes</div>
+            </div>
+            <div class="log-entry">
+                <div class="log-info">
+                    <div class="log-status"></div>
+                    <span>Accès au mémoire depuis memoir-access.html</span>
+                </div>
+                <div class="log-time">Hier à 14:30</div>
+            </div>
+            <div class="log-entry">
+                <div class="log-info">
+                    <div class="log-status"></div>
+                    <span>Mise à jour du parcours personnel</span>
+                </div>
+                <div class="log-time">Il y a 3 jours</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is authenticated
+        function checkAuth() {
+            const isAuthenticated = sessionStorage.getItem('adminAuthenticated');
+            if (!isAuthenticated) {
+                window.location.href = 'admin-login.html';
+                return false;
+            }
+            return true;
+        }
+        
+        // Initialize page
+        if (!checkAuth()) {
+            // Redirect handled in checkAuth
+        }
+        
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all tab buttons
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update menu links
+            const menuLinks = document.querySelectorAll('.private-menu a');
+            menuLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                sessionStorage.removeItem('adminAuthenticated');
+                window.location.href = 'admin-login.html';
+            }
+        }
+        
+        // Auto-logout after inactivity (30 minutes)
+        let inactivityTimer;
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                alert('Session expirée pour des raisons de sécurité.');
+                logout();
+            }, 30 * 60 * 1000); // 30 minutes
+        }
+        
+        // Reset timer on user activity
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keypress', resetInactivityTimer);
+        resetInactivityTimer();
+        
+        // Security measures
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // Log access
+        console.log('Private area accessed at:', new Date().toISOString());
+    </script>
+</body>
+</html>

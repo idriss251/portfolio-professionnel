@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Prédictive des Ventes - Démo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .demo-content {
+            padding: 40px;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .metric-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            border-left: 5px solid #10b981;
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #10b981;
+            margin: 10px 0;
+        }
+        
+        .chart-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .prediction-form {
+            background: #e3f2fd;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .predict-btn {
+            background: #10b981;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .predict-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        
+        .prediction-result {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #2c3e50;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html#projects" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Retour au Portfolio
+    </a>
+    
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-chart-line"></i> Analyse Prédictive des Ventes</h1>
+            <p>Modèle de machine learning pour la prédiction des ventes</p>
+        </div>
+        
+        <div class="demo-content">
+            <div class="dashboard-grid">
+                <div class="metric-card">
+                    <i class="fas fa-chart-bar" style="font-size: 2rem; color: #10b981;"></i>
+                    <div class="metric-value">€2.4M</div>
+                    <div style="color: #6c757d;">Ventes Prédites (Q1)</div>
+                </div>
+                
+                <div class="metric-card">
+                    <i class="fas fa-trending-up" style="font-size: 2rem; color: #10b981;"></i>
+                    <div class="metric-value">+15.3%</div>
+                    <div style="color: #6c757d;">Croissance Prévue</div>
+                </div>
+                
+                <div class="metric-card">
+                    <i class="fas fa-bullseye" style="font-size: 2rem; color: #10b981;"></i>
+                    <div class="metric-value">94.7%</div>
+                    <div style="color: #6c757d;">Précision du Modèle</div>
+                </div>
+                
+                <div class="metric-card">
+                    <i class="fas fa-clock" style="font-size: 2rem; color: #10b981;"></i>
+                    <div class="metric-value">12 mois</div>
+                    <div style="color: #6c757d;">Horizon de Prédiction</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">
+                    <i class="fas fa-chart-area"></i> Évolution des Ventes - Historique vs Prédictions
+                </h3>
+                <canvas id="salesChart" width="400" height="200"></canvas>
+            </div>
+            
+            <div class="prediction-form">
+                <h3 style="margin-bottom: 20px; color: #2c3e50;">
+                    <i class="fas fa-calculator"></i> Calculateur de Prédiction Personnalisé
+                </h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="product-category">Catégorie de Produit :</label>
+                        <select id="product-category">
+                            <option value="electronics">Électronique</option>
+                            <option value="clothing">Vêtements</option>
+                            <option value="home">Maison & Jardin</option>
+                            <option value="sports">Sports & Loisirs</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="season">Saison :</label>
+                        <select id="season">
+                            <option value="spring">Printemps</option>
+                            <option value="summer">Été</option>
+                            <option value="autumn">Automne</option>
+                            <option value="winter">Hiver</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="marketing-budget">Budget Marketing (€) :</label>
+                        <input type="number" id="marketing-budget" value="50000" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="price-point">Point de Prix (€) :</label>
+                        <input type="number" id="price-point" value="99" min="1">
+                    </div>
+                </div>
+                
+                <button class="predict-btn" onclick="generatePrediction()">
+                    <i class="fas fa-magic"></i> Générer Prédiction
+                </button>
+                
+                <div id="prediction-result" class="prediction-result">
+                    <!-- Prediction results will appear here -->
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin-top: 30px;">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">
+                    <i class="fas fa-cogs"></i> Algorithmes & Technologies
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <h4 style="color: #10b981; margin-bottom: 10px;">Modèles ML</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>ARIMA pour séries temporelles</li>
+                            <li>Random Forest Regressor</li>
+                            <li>XGBoost</li>
+                            <li>LSTM Neural Networks</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: #10b981; margin-bottom: 10px;">Technologies</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>Python & Scikit-learn</li>
+                            <li>Pandas & NumPy</li>
+                            <li>TensorFlow</li>
+                            <li>Plotly & Matplotlib</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the sales chart
+        const ctx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+                datasets: [{
+                    label: 'Ventes Historiques',
+                    data: [180000, 195000, 210000, 225000, 240000, 255000, 270000, 285000, 300000, 315000, 330000, 345000],
+                    borderColor: '#6c757d',
+                    backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                    tension: 0.4
+                }, {
+                    label: 'Prédictions',
+                    data: [null, null, null, null, null, null, null, null, 305000, 322000, 338000, 355000],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderDash: [5, 5],
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return '€' + (value / 1000) + 'K';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        function generatePrediction() {
+            const category = document.getElementById('product-category').value;
+            const season = document.getElementById('season').value;
+            const budget = parseInt(document.getElementById('marketing-budget').value);
+            const price = parseInt(document.getElementById('price-point').value);
+            
+            // Simulate ML prediction based on inputs
+            const baseSales = 50000;
+            const categoryMultiplier = {
+                'electronics': 1.5,
+                'clothing': 1.2,
+                'home': 1.0,
+                'sports': 0.8
+            };
+            
+            const seasonMultiplier = {
+                'spring': 1.1,
+                'summer': 1.3,
+                'autumn': 1.0,
+                'winter': 1.4
+            };
+            
+            const budgetImpact = Math.log(budget / 10000) * 5000;
+            const priceImpact = Math.max(0, (150 - price) * 100);
+            
+            const predictedSales = Math.round(
+                baseSales * categoryMultiplier[category] * seasonMultiplier[season] + 
+                budgetImpact + priceImpact
+            );
+            
+            const confidence = Math.min(95, Math.max(75, 90 - Math.abs(price - 99) * 0.1));
+            
+            const resultContainer = document.getElementById('prediction-result');
+            resultContainer.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: #10b981;">€${predictedSales.toLocaleString()}</div>
+                        <div style="color: #6c757d;">Ventes Prédites</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: #2196f3;">${confidence.toFixed(1)}%</div>
+                        <div style="color: #6c757d;">Niveau de Confiance</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 700; color: #ff9800;">€${Math.round(predictedSales * 0.25).toLocaleString()}</div>
+                        <div style="color: #6c757d;">Profit Estimé</div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #e8f5e8; border-radius: 8px;">
+                    <strong>Recommandations :</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Optimiser le budget marketing pour maximiser le ROI</li>
+                        <li>Ajuster les prix selon la demande saisonnière</li>
+                        <li>Surveiller les tendances du marché</li>
+                    </ul>
+                </div>
+            `;
+            resultContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

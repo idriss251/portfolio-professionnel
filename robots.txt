@@ -1,0 +1,41 @@
+User-agent: *
+Allow: /
+
+# Interdire l'accès aux dossiers sensibles
+Disallow: /app/
+Disallow: /logs/
+Disallow: /tmp/
+Disallow: /vendor/
+Disallow: /.git/
+
+# Autoriser les ressources publiques
+Allow: /assets/
+Allow: /public/
+
+# Sitemap
+Sitemap: http://localhost/mon-site-professionnel/sitemap.xml
+
+# Délai entre les requêtes (en secondes)
+Crawl-delay: 1
+
+# Règles spécifiques pour les principaux moteurs de recherche
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Interdire les bots de spam
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

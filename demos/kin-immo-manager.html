@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kin-Immo Manager - Démo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .demo-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .demo-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .demo-content {
+            padding: 40px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-card i {
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+        
+        .screenshot {
+            background: #e9ecef;
+            height: 300px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .screenshot i {
+            font-size: 4rem;
+            color: #6c757d;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #2c3e50;
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html#projects" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Retour au Portfolio
+    </a>
+    
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1><i class="fas fa-building"></i> Kin-Immo Manager</h1>
+            <p>Système de gestion immobilière moderne pour Kinshasa, RDC</p>
+        </div>
+        
+        <div class="demo-content">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-home"></i> Gestion des Biens</h3>
+                    <p>Interface complète pour ajouter, modifier et gérer tous types de biens immobiliers : maisons, appartements, terrains, bureaux.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-users"></i> Gestion des Clients</h3>
+                    <p>Base de données clients avec historique des transactions, préférences et suivi personnalisé.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-chart-bar"></i> Rapports & Analytics</h3>
+                    <p>Tableaux de bord avec statistiques de ventes, revenus locatifs et analyses de marché.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-calendar"></i> Planning & Visites</h3>
+                    <p>Système de réservation de visites avec calendrier intégré et notifications automatiques.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-file-contract"></i> Contrats & Documents</h3>
+                    <p>Génération automatique de contrats de vente et de location avec templates personnalisables.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><i class="fas fa-mobile-alt"></i> Interface Responsive</h3>
+                    <p>Application web responsive optimisée pour tous les appareils : desktop, tablette et mobile.</p>
+                </div>
+            </div>
+            
+            <div class="screenshot">
+                <div style="text-align: center;">
+                    <i class="fas fa-desktop"></i>
+                    <p style="margin-top: 20px; color: #6c757d; font-size: 1.2rem;">Interface de démonstration</p>
+                    <p style="color: #6c757d;">Tableau de bord principal avec vue d'ensemble des propriétés</p>
+                </div>
+            </div>
+            
+            <h3 style="margin-bottom: 20px; color: #2c3e50;">Technologies Utilisées</h3>
+            <div class="tech-stack">
+                <span class="tech-tag">PHP 8.0</span>
+                <span class="tech-tag">MySQL</span>
+                <span class="tech-tag">JavaScript ES6</span>
+                <span class="tech-tag">Bootstrap 5</span>
+                <span class="tech-tag">jQuery</span>
+                <span class="tech-tag">Chart.js</span>
+                <span class="tech-tag">Apache</span>
+            </div>
+            
+            <div style="margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 15px;">
+                <h3 style="color: #2c3e50; margin-bottom: 15px;">
+                    <i class="fas fa-info-circle"></i> À propos du projet
+                </h3>
+                <p style="line-height: 1.8; color: #495057;">
+                    Kin-Immo Manager est une solution complète développée spécifiquement pour le marché immobilier de Kinshasa. 
+                    L'application prend en compte les spécificités locales du marché congolais et offre une interface intuitive 
+                    en français pour faciliter l'adoption par les professionnels de l'immobilier.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

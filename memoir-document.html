@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mémoire - Système de Gestion Scolaire Intégré</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+        
+        .document-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+        
+        .document-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .document-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .document-header h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .document-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .meta-item {
+            text-align: center;
+        }
+        
+        .meta-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .meta-value {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .document-nav {
+            background: #34495e;
+            padding: 20px 40px;
+            border-bottom: 1px solid #2c3e50;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-link {
+            color: #ecf0f1;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: #ffc107;
+            color: #2c3e50;
+        }
+        
+        .document-content {
+            padding: 40px;
+        }
+        
+        .chapter {
+            margin-bottom: 50px;
+            display: none;
+        }
+        
+        .chapter.active {
+            display: block;
+        }
+        
+        .chapter-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ffc107;
+        }
+        
+        .chapter-content h3 {
+            color: #34495e;
+            font-size: 1.4rem;
+            margin: 30px 0 15px 0;
+            font-weight: 600;
+        }
+        
+        .chapter-content h4 {
+            color: #5d6d7e;
+            font-size: 1.2rem;
+            margin: 25px 0 12px 0;
+            font-weight: 600;
+        }
+        
+        .chapter-content p {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .chapter-content ul, .chapter-content ol {
+            margin: 15px 0 15px 30px;
+            color: #2c3e50;
+        }
+        
+        .chapter-content li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #ffc107;
+            margin: 25px 0;
+        }
+        
+        .highlight-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .tech-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .tech-card h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .tech-card ul {
+            margin-left: 0;
+            list-style: none;
+        }
+        
+        .tech-card li {
+            padding: 5px 0;
+            color: #5d6d7e;
+        }
+        
+        .tech-card li::before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-top: 4px solid #ffc107;
+        }
+        
+        .feature-card h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-card i {
+            color: #ffc107;
+            font-size: 1.3rem;
+        }
+        
+        .app-preview {
+            background: #2c3e50;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .app-preview h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .app-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffc107;
+            color: #2c3e50;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .app-btn:hover {
+            background: #e6a700;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ffc107;
+            color: #2c3e50;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .document-header, .document-content {
+                padding: 20px;
+            }
+            
+            .document-nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .document-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <div class="document-header">
+            <h1>Conception et Développement d'un Système de Gestion Scolaire Intégré</h1>
+            <h2>Cas d'étude : Complexe Scolaire La Borne</h2>
+            
+            <div class="document-meta">
+                <div class="meta-item">
+                    <div class="meta-label">Auteur</div>
+                    <div class="meta-value">Idriss Kyavuyirwe</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Année Académique</div>
+                    <div class="meta-value">2024-2025</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Directeur</div>
+                    <div class="meta-value">Prof. Associé MAYALA LEMBA Francis</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Institution</div>
+                    <div class="meta-value">Université Pedagogique Nationale RDC</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="document-nav">
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showChapter('resume')">Résumé</a>
+                <a href="#" class="nav-link" onclick="showChapter('introduction')">Introduction</a>
+                <a href="#" class="nav-link" onclick="showChapter('analyse')">Analyse</a>
+                <a href="#" class="nav-link" onclick="showChapter('conception')">Conception</a>
+                <a href="#" class="nav-link" onclick="showChapter('implementation')">Implémentation</a>
+                <a href="#" class="nav-link" onclick="showChapter('conclusion')">Conclusion</a>
+            </div>
+        </div>
+        
+        <div class="document-content">
+            <!-- Résumé -->
+            <div class="chapter active" id="resume">
+                <h2 class="chapter-title">Résumé Exécutif</h2>
+                <div class="chapter-content">
+                    <p>
+                        Ce mémoire présente la conception et le développement d'un système de gestion scolaire intégré 
+                        pour le Complexe Scolaire La Borne. Le projet vise à moderniser et automatiser les processus 
+                        administratifs et pédagogiques de l'établissement.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <h4>Objectifs Principaux</h4>
+                        <ul>
+                            <li>Digitaliser la gestion des élèves et du personnel</li>
+                            <li>Automatiser le système de notation et d'évaluation</li>
+                            <li>Faciliter la communication parents-école</li>
+                            <li>Optimiser la gestion des ressources scolaires</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Résultats Obtenus</h3>
+                    <p>
+                        Le système développé a permis une réduction de 70% du temps consacré aux tâches administratives 
+                        et une amélioration significative de la communication entre tous les acteurs de l'écosystème scolaire.
+                    </p>
+                    
+                    <div class="tech-stack">
+                        <div class="tech-card">
+                            <h4>Technologies Frontend</h4>
+                            <ul>
+                                <li>HTML5 & CSS3</li>
+                                <li>JavaScript ES6+</li>
+                                <li>Bootstrap 5</li>
+                                <li>jQuery</li>
+                            </ul>
+                        </div>
+                        <div class="tech-card">
+                            <h4>Technologies Backend</h4>
+                            <ul>
+                                <li>PHP 8.0</li>
+                                <li>MySQL 8.0</li>
+                                <li>Apache Server</li>
+                                <li>PHPMailer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Introduction -->
+            <div class="chapter" id="introduction">
+                <h2 class="chapter-title">1. Introduction</h2>
+                <div class="chapter-content">
+                    <h3>1.1 Contexte et Problématique</h3>
+                    <p>
+                        Le Complexe Scolaire La Borne, établissement d'enseignement primaire et secondaire situé à Kinshasa, 
+                        fait face à des défis majeurs dans la gestion de ses activités quotidiennes. Les processus manuels 
+                        traditionnels entraînent des inefficacités, des erreurs et une perte de temps considérable.
+                    </p>
+                    
+                    <h3>1.2 Objectifs de l'Étude</h3>
+                    <h4>1.2.1 Objectif Général</h4>
+                    <p>
+                        Concevoir et développer un système de gestion scolaire intégré qui automatise et optimise 
+                        les processus administratifs et pédagogiques du Complexe Scolaire La Borne.
+                    </p>
+                    
+                    <h4>1.2.2 Objectifs Spécifiques</h4>
+                    <ul>
+                        <li>Analyser les besoins fonctionnels et non-fonctionnels de l'établissement</li>
+                        <li>Concevoir une architecture système robuste et évolutive</li>
+                        <li>Développer une application web responsive et sécurisée</li>
+                        <li>Implémenter des fonctionnalités de gestion complètes</li>
+                        <li>Tester et valider le système avec les utilisateurs finaux</li>
+                    </ul>
+                    
+                    <h3>1.3 Méthodologie</h3>
+                    <p>
+                        Cette étude adopte une approche méthodologique mixte combinant recherche documentaire, 
+                        analyse des besoins sur le terrain, et développement itératif selon le modèle Agile.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Analyse -->
+            <div class="chapter" id="analyse">
+                <h2 class="chapter-title">2. Analyse des Besoins</h2>
+                <div class="chapter-content">
+                    <h3>2.1 Étude de l'Existant</h3>
+                    <p>
+                        L'analyse de l'existant révèle un système de gestion entièrement manuel basé sur des registres 
+                        papier et des fichiers Excel dispersés. Cette approche génère plusieurs problématiques :
+                    </p>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Problèmes Identifiés</h4>
+                            <ul>
+                                <li>Perte de données fréquente</li>
+                                <li>Duplication d'informations</li>
+                                <li>Processus lents et inefficaces</li>
+                                <li>Communication difficile</li>
+                            </ul>
+                        </div>
+                        <div class="feature-card">
+                            <h4><i class="fas fa-users"></i> Acteurs Principaux</h4>
+                            <ul>
+                                <li>Direction de l'école</li>
+                                <li>Personnel administratif</li>
+                                <li>Corps enseignant</li>
+                                <li>Élèves et parents</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>2.2 Besoins Fonctionnels</h3>
+                    <p>
+                        Suite aux entretiens avec les différents acteurs, les besoins fonctionnels suivants ont été identifiés :
+                    </p>
+                    
+                    <h4>2.2.1 Gestion des Élèves</h4>
+                    <ul>
+                        <li>Inscription et réinscription des élèves</li>
+                        <li>Gestion des dossiers scolaires</li>
+                        <li>Suivi des présences</li>
+                        <li>Gestion des sanctions et récompenses</li>
+                    </ul>
+                    
+                    <h4>2.2.2 Gestion Académique</h4>
+                    <ul>
+                        <li>Création et gestion des emplois du temps</li>
+                        <li>Saisie et calcul des notes</li>
+                        <li>Génération des bulletins</li>
+                        <li>Suivi des progressions pédagogiques</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Conception -->
+            <div class="chapter" id="conception">
+                <h2 class="chapter-title">3. Conception du Système</h2>
+                <div class="chapter-content">
+                    <h3>3.1 Architecture Générale</h3>
+                    <p>
+                        Le système adopte une architecture 3-tiers (présentation, logique métier, données) 
+                        garantissant la séparation des préoccupations et la maintenabilité du code.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <h4>Choix Architecturaux</h4>
+                        <p>
+                            L'architecture MVC (Model-View-Controller) a été retenue pour structurer l'application, 
+                            permettant une séparation claire entre la logique métier, la présentation et la gestion des données.
+                        </p>
+                    </div>
+                    
+                    <h3>3.2 Modélisation de la Base de Données</h3>
+                    <p>
+                        La base de données comprend 15 tables principales interconnectées pour gérer l'ensemble 
+                        des informations de l'établissement scolaire.
+                    </p>
+                    
+                    <h4>3.2.1 Tables Principales</h4>
+                    <ul>
+                        <li><strong>users</strong> : Gestion des utilisateurs et authentification</li>
+                        <li><strong>students</strong> : Informations des élèves</li>
+                        <li><strong>teachers</strong> : Données du personnel enseignant</li>
+                        <li><strong>classes</strong> : Configuration des classes</li>
+                        <li><strong>subjects</strong> : Matières enseignées</li>
+                        <li><strong>grades</strong> : Notes et évaluations</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Implémentation -->
+            <div class="chapter" id="implementation">
+                <h2 class="chapter-title">4. Implémentation</h2>
+                <div class="chapter-content">
+                    <h3>4.1 Environnement de Développement</h3>
+                    <p>
+                        Le développement s'est effectué dans un environnement XAMPP (Apache, MySQL, PHP) 
+                        sur Windows, garantissant une compatibilité optimale avec l'infrastructure existante.
+                    </p>
+                    
+                    <h3>4.2 Fonctionnalités Développées</h3>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h4><i class="fas fa-user-graduate"></i> Module Élèves</h4>
+                            <ul>
+                                <li>Inscription en ligne</li>
+                                <li>Gestion des profils</li>
+                                <li>Suivi des présences</li>
+                                <li>Historique scolaire</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4><i class="fas fa-chalkboard-teacher"></i> Module Enseignants</h4>
+                            <ul>
+                                <li>Gestion des cours</li>
+                                <li>Saisie des notes</li>
+                                <li>Planning personnel</li>
+                                <li>Communication</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4><i class="fas fa-chart-bar"></i> Module Rapports</h4>
+                            <ul>
+                                <li>Bulletins automatiques</li>
+                                <li>Statistiques de classe</li>
+                                <li>Rapports de présence</li>
+                                <li>Analyses de performance</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4><i class="fas fa-shield-alt"></i> Sécurité</h4>
+                            <ul>
+                                <li>Authentification sécurisée</li>
+                                <li>Gestion des rôles</li>
+                                <li>Chiffrement des données</li>
+                                <li>Audit des actions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="app-preview">
+                        <h3>Accès à l'Application Développée</h3>
+                        <p style="color: #ecf0f1; margin-bottom: 20px;">
+                            Découvrez le système de gestion scolaire en action
+                        </p>
+                        <a href="#" class="app-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            Voir l'Application Demo
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fas fa-download"></i>
+                            Télécharger le Code Source
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Conclusion -->
+            <div class="chapter" id="conclusion">
+                <h2 class="chapter-title">5. Conclusion et Perspectives</h2>
+                <div class="chapter-content">
+                    <h3>5.1 Bilan du Projet</h3>
+                    <p>
+                        Ce projet de fin d'études a permis de concevoir et développer avec succès un système de gestion 
+                        scolaire intégré répondant aux besoins spécifiques du Complexe Scolaire La Borne. 
+                        Les objectifs fixés ont été atteints et les résultats obtenus sont encourageants.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <h4>Résultats Quantifiables</h4>
+                        <ul>
+                            <li><strong>70% de réduction</strong> du temps de traitement administratif</li>
+                            <li><strong>95% de satisfaction</strong> des utilisateurs testeurs</li>
+                            <li><strong>100% de fiabilité</strong> dans le calcul des moyennes</li>
+                            <li><strong>0 perte de données</strong> depuis la mise en service</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>5.2 Apports Personnels</h3>
+                    <p>
+                        Ce projet m'a permis de développer des compétences techniques approfondies en développement web, 
+                        gestion de bases de données, et analyse des besoins. J'ai également acquis une expérience précieuse 
+                        en gestion de projet et en communication avec les utilisateurs finaux.
+                    </p>
+                    
+                    <h3>5.3 Perspectives d'Amélioration</h3>
+                    <h4>5.3.1 Court Terme</h4>
+                    <ul>
+                        <li>Intégration d'un module de paiement en ligne</li>
+                        <li>Développement d'une application mobile</li>
+                        <li>Amélioration de l'interface utilisateur</li>
+                    </ul>
+                    
+                    <h4>5.3.2 Long Terme</h4>
+                    <ul>
+                        <li>Intelligence artificielle pour l'analyse prédictive</li>
+                        <li>Intégration avec d'autres établissements</li>
+                        <li>Plateforme d'apprentissage en ligne intégrée</li>
+                    </ul>
+                    
+                    <div class="app-preview">
+                        <h3>Remerciements</h3>
+                        <p style="color: #ecf0f1;">
+                            Je tiens à remercier tous ceux qui ont contribué à la réussite de ce projet, 
+                            en particulier l'équipe du Complexe Scolaire La Borne pour leur collaboration 
+                            et mon directeur de mémoire pour ses conseils précieux.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="#" class="back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        function showChapter(chapterId) {
+            // Hide all chapters
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach(chapter => chapter.classList.remove('active'));
+            
+            // Remove active class from all nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Show selected chapter
+            document.getElementById(chapterId).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        
+        // Add some protection
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        
+        // Add reading progress
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            
+            // You can add a progress bar here if needed
+        });
+    </script>
+</body>
+</html>

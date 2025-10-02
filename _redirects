@@ -1,0 +1,16 @@
+# Redirections pour Render
+/*    /index.html   200
+
+# Redirections spécifiques
+/admin    /admin-login.html    200
+/login    /admin-login.html    200
+/private  /private-area.html   200
+/memoir   /memoir-access.html  200
+
+# Headers de sécurité
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';

@@ -183,26 +183,72 @@ class ModernPortfolio {
             {
                 id: 1,
                 title: "Système de Recommandation ML",
-                description: "Algorithme de recommandation utilisant le deep learning pour personnaliser l'expérience utilisateur.",
+                description: "Algorithme de recommandation utilisant le deep learning et le filtrage collaboratif pour personnaliser l'expérience utilisateur.",
                 category: "ml",
-                tags: ["Python", "TensorFlow", "Deep Learning"],
-                image: "fas fa-brain"
+                tags: ["Python", "TensorFlow", "Collaborative Filtering", "Deep Learning"],
+                image: "fas fa-brain",
+                github: "#",
+                demo: "demos/ml-recommendation.html"
             },
             {
                 id: 2,
-                title: "Kin-Immo Manager", 
-                description: "Système de gestion immobilière moderne pour Kinshasa, RDC.",
-                category: "web",
-                tags: ["PHP", "MySQL", "JavaScript"],
-                image: "fas fa-building"
+                title: "Analyse Prédictive des Ventes",
+                description: "Modèle de prédiction des ventes utilisant des techniques de time series et de régression pour optimiser la stratégie commerciale.",
+                category: "data",
+                tags: ["Python", "Scikit-learn", "Pandas", "Time Series"],
+                image: "fas fa-chart-line",
+                github: "#",
+                demo: "demos/sales-prediction.html"
             },
             {
                 id: 3,
-                title: "Analyse Prédictive",
-                description: "Modèle de prédiction des ventes utilisant des techniques avancées.",
+                title: "Kin-Immo Manager",
+                description: "Système de gestion immobilière moderne pour Kinshasa, République Démocratique du Congo. Application complète de gestion des biens immobiliers.",
+                category: "web",
+                tags: ["PHP", "MySQL", "JavaScript", "Bootstrap"],
+                image: "fas fa-building",
+                github: "#",
+                demo: "demos/kin-immo-manager.html"
+            },
+            {
+                id: 4,
+                title: "Chatbot Intelligent",
+                description: "Assistant conversationnel basé sur NLP et transformers pour automatiser le support client avec compréhension contextuelle.",
+                category: "ai",
+                tags: ["NLP", "Transformers", "BERT", "Python"],
+                image: "fas fa-robot",
+                github: "#",
+                demo: "demos/chatbot-intelligent.html"
+            },
+            {
+                id: 5,
+                title: "Vision par Ordinateur",
+                description: "Système de détection et classification d'objets en temps réel utilisant des réseaux de neurones convolutionnels.",
+                category: "ai",
+                tags: ["OpenCV", "CNN", "PyTorch", "Computer Vision"],
+                image: "fas fa-eye",
+                github: "#",
+                demo: "demos/computer-vision.html"
+            },
+            {
+                id: 6,
+                title: "Pipeline MLOps",
+                description: "Infrastructure complète de déploiement et monitoring de modèles ML en production avec CI/CD automatisé.",
+                category: "ml",
+                tags: ["Docker", "Kubernetes", "MLflow", "AWS"],
+                image: "fas fa-cogs",
+                github: "#",
+                demo: "demos/mlops-pipeline.html"
+            },
+            {
+                id: 7,
+                title: "Analyse de Sentiment",
+                description: "Outil d'analyse de sentiment sur les réseaux sociaux utilisant des modèles de NLP pour le monitoring de marque.",
                 category: "data",
-                tags: ["Python", "Scikit-learn", "Pandas"],
-                image: "fas fa-chart-line"
+                tags: ["NLP", "Sentiment Analysis", "Twitter API", "Visualization"],
+                image: "fas fa-heart",
+                github: "#",
+                demo: "demos/sentiment-analysis.html"
             }
         ];
         
@@ -224,6 +270,16 @@ class ModernPortfolio {
                     <p class="project-description">${project.description}</p>
                     <div class="project-tags">
                         ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="project-links">
+                        <a href="${project.github}" class="project-link">
+                            <i class="fab fa-github"></i>
+                            Code
+                        </a>
+                        <a href="${project.demo}" class="project-link">
+                            <i class="fas fa-external-link-alt"></i>
+                            Demo
+                        </a>
                     </div>
                 </div>
             </div>

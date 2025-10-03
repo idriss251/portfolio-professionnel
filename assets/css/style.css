@@ -1257,14 +1257,27 @@ h1, h2, h3, h4, h5, h6 {
 .project-link {
     display: inline-flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    color: var(--primary-color);
+    gap: var(--space-2);
+    color: var(--primary);
     font-weight: 500;
-    transition: color var(--transition-fast);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius);
+    transition: all var(--transition);
+    border: 1px solid transparent;
 }
 
 .project-link:hover {
-    color: var(--secondary-color);
+    color: var(--white);
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.project-link i {
+    font-size: var(--text-sm);
 }
 
 /* ===== SERVICES SECTION ===== */

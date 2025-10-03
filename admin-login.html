@@ -309,6 +309,181 @@
             color: #667eea;
             width: 16px;
         }
+        
+        /* ===== RESPONSIVE DESIGN MOBILE ===== */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                min-height: 100vh;
+            }
+            
+            .login-container {
+                max-width: 100%;
+                margin: 0;
+                border-radius: 15px;
+            }
+            
+            .login-header {
+                padding: 30px 20px;
+            }
+            
+            .login-header .logo {
+                font-size: 2.5rem;
+                margin-bottom: 10px;
+            }
+            
+            .login-header h1 {
+                font-size: 1.5rem;
+                margin-bottom: 8px;
+            }
+            
+            .login-header p {
+                font-size: 0.9rem;
+            }
+            
+            .login-content {
+                padding: 30px 20px;
+            }
+            
+            .security-notice {
+                padding: 15px;
+                margin-bottom: 25px;
+            }
+            
+            .security-notice i {
+                font-size: 1.5rem;
+            }
+            
+            .security-notice h3 {
+                font-size: 1.1rem;
+            }
+            
+            .security-notice p {
+                font-size: 0.85rem;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .form-group input {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+            }
+            
+            .form-group i {
+                right: 12px;
+                margin-top: 10px;
+            }
+            
+            .login-btn {
+                padding: 12px;
+                font-size: 1rem;
+            }
+            
+            .features-preview {
+                padding: 20px 15px;
+                margin-top: 25px;
+            }
+            
+            .features-preview h4 {
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+            
+            .feature-item {
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            
+            .attempts-counter {
+                font-size: 0.85rem;
+                margin-top: 12px;
+            }
+            
+            .back-link {
+                margin-top: 25px;
+            }
+            
+            .back-link a {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .login-container {
+                border-radius: 10px;
+            }
+            
+            .login-header {
+                padding: 25px 15px;
+            }
+            
+            .login-header .logo {
+                font-size: 2rem;
+            }
+            
+            .login-header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .login-content {
+                padding: 25px 15px;
+            }
+            
+            .security-notice {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+            
+            .form-group input {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .login-btn {
+                padding: 10px;
+                font-size: 0.95rem;
+            }
+            
+            .features-preview {
+                padding: 15px 12px;
+                margin-top: 20px;
+            }
+            
+            .feature-item {
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Amélioration de l'accessibilité tactile */
+        @media (hover: none) and (pointer: coarse) {
+            .form-group input {
+                min-height: 44px;
+            }
+            
+            .login-btn {
+                min-height: 44px;
+            }
+            
+            .back-link a {
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                padding: 8px 12px;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
+            }
+            
+            .back-link a:hover {
+                background-color: rgba(102, 126, 234, 0.1);
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body>
